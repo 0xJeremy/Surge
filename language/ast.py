@@ -28,7 +28,7 @@ class meth():
 class EInt(Expr):
 	def __init__(self, value):
 		self.type = "EInt"
-		self.value = data
+		self.value = value
 
 class ENil(Expr):
 	def __init__(self):

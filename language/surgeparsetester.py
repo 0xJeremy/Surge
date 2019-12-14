@@ -1,4 +1,5 @@
 from surgeparse import SurgeParser
+from ast import *
 
 parser = SurgeParser()
 
@@ -8,4 +9,11 @@ while True:
 	except EOFError:
 		print()
 		break
-	parser.parse(s)
+	x = parser.parse(s)
+	print(type(x))
+	if type(x) == surge_prog:
+		print("PATTERN MATCHED PROG")
+		cls = x.prog_clss
+		main = x.prog_main
+		if type(main) == EInt:
+			print(main.value)

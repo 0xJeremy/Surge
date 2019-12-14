@@ -4,21 +4,28 @@ from ast import *
 
 def SurgeParser():
 
+	start = 'main'
+
+	precedence = (
+		('right', 'SEMI', 'EQ'),
+		('nonassoc', 'DOT')
+	)
+
 	###########################
 	### PROGRAM AND CLASSES ###
 	###########################
 
 	def p_main(p):
-		'''main : clss exprs EOF'''
+		'''main : clss exprs'''
 		p[0] = surge_prog(p[1], p[2])
 
 	def p_clss(p):
 		'''clss : cls clss
 				| empty'''
-		if len(p) == 1:
+		if len(p) == 2:
 			p[0] = []
 		else:
-			p[0] = [p[1], p[2]]
+			p[0] = p[1] + [p[2]]
 
 	def p_cls(p):
 		'''cls : CLASS ID INHERITS ID BEGIN meths END'''
@@ -27,10 +34,10 @@ def SurgeParser():
 	def p_meths(p):
 		'''meths : meth meths
 				 | empty'''
-		if len(p) == 1:
+		if len(p) == 2:
 			p[0] = []
 		else:
-			p[0] = [p[1], p[2]]
+			p[0] = p[1] + [p[2]]
 
 	def p_meth(p):
 		'''meth : DEF ID LP ids RP exprs END'''
@@ -41,15 +48,16 @@ def SurgeParser():
 	###########################
 
 	def p_ids(p):
-		'''ids : empty
-			   | ID
+		'''ids : ID
 			   | ID COMMA ids'''
-		if len(p) == 1:
-			p[0] = []
-		elif len(p) == 2:
+		if len(p) == 2:
 			p[0] = p[1]
 		elif len(p) == 4:
 			p[0] = ESeq(p[1], p[3])
+
+	def p_ids_empty(p):
+		'''ids : empty'''
+		p[0] = []
 
 	def p_exprs(p):
 		'''exprs : expr
@@ -77,12 +85,11 @@ def SurgeParser():
 
 	def p_id(p):
 		'''expr : ID'''
-		p[0] = ELocRd()
+		p[0] = ELocRd(p[1])
 
 	def p_locwr(p):
 		'''expr : ID EQ expr'''
 		p[0] = ELocWr(p[1], p[3])
-
 
 	def p_fid(p):
 		'''expr : FID'''
@@ -117,18 +124,18 @@ def SurgeParser():
 		elif len(p) == 2:
 			p[0] = p[1]
 		else:
-			p[0] = [p[1], p[3]]
+			p[0] = p[1] + [p[3]]
 
 	###############
 	### HELPERS ###
 	###############
 
 	def p_empty(p):
-		'''empty :'''
+		'''empty : '''
 		pass
 
 	def p_error(t):
-		print("Syntax error at '%s'" % t.value)
+		print("Syntax error at '%s'" % t)
 
 	lexer = SurgeLexer()
 	return yacc.yacc()
