@@ -29,7 +29,7 @@ def SurgeParser():
 
 	def p_cls(p):
 		'''cls : CLASS ID INHERITS ID BEGIN meths END'''
-		p[0] = cls(p[2], p[4], p[6])
+		p[0] = [cls(p[2], p[4], p[6])]
 
 	def p_meths(p):
 		'''meths : meth meths
@@ -40,8 +40,8 @@ def SurgeParser():
 			p[0] = p[1] + [p[2]]
 
 	def p_meth(p):
-		'''meth : DEF ID LP ids RP exprs END'''
-		p[0] = meth(p[2], p[4], p[6])
+		'''meth : DEF ID LP ids RP BEGIN exprs END'''
+		p[0] = [meth(p[2], p[4], p[7])]
 
 	###########################
 	### IDS AND EXPRESSIONS ###

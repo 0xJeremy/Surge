@@ -56,6 +56,7 @@ def fresh_location():
 #############################
 
 def defined_class(p, name):
+	print(p.prog_clss)
 	for obj in p.prog_clss:
 		if obj.name == name:
 			return True
@@ -114,7 +115,7 @@ def eval(p, A, H, e):
 		elif e.value == "Bot": raise Fail
 		if defined_class(p, e.value):
 			loc = fresh_location()
-			update(H, (loc, object(e, [])))
+			update(H, (loc, object(e, {})))
 			return A, H, RLoc(loc)
 		raise Fail
 	elif type(e) == EInvoke:
@@ -137,8 +138,8 @@ def invoke(p, A, H, e):
 			m = v_args[0].value
 			if meth == "+": return A, H, RInt(n+m)
 			if meth == "-": return A, H, RInt(n-m)
-			if meth == "*": return A, H, RInt(n*m)
-			if meth == "/": return A, H, RInt(n/m)
+			if meth == "*": return A, H, RInt(int(n*m))
+			if meth == "/": return A, H, RInt(int(n/m))
 			if meth == "equal?": return A, H, RInt(1) if n == m else A, H, RNil()
 		if len(v_args) == 0:
 			if meth == "to_s": return A, H, RStr(str(n))
@@ -165,7 +166,7 @@ def invoke(p, A, H, e):
 			if meth == "equal?": return A, H, RInt(1) if loc == loc1 else A, H, RNil()
 		cur_object = lookup(loc, H)
 		if cur_object is None: raise Fail
-		meth = lookup_meth(p, cur_object.name, meth)
+		meth = lookup_meth(p, cur_object.class_name, meth)
 		if meth is None: raise NoSuchMethod
 		if len(v_args) != len(meth.args): raise NoSuchMethod
 		tmp_A = {}
@@ -174,14 +175,16 @@ def invoke(p, A, H, e):
 		tmp_A, H, s = eval(p, tmp_A, H, meth)
 		return A, H, s
 
-
+######################
+### PROGRAM RUNNER ###
+######################
 
 def run(p):
 	e = p.prog_main
 	A = {}
 	H = {}
 	loc = fresh_location()
-	update(H, (loc, object("Object", [])))
+	update(H, (loc, object("Object", {})))
 	update(A, ("self", loc))
 	A, H, v = eval(p, A, H, e)
 	if   type(v) == RNil: print("nil")

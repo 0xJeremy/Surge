@@ -1,1 +1,13 @@
-1.+(0)
+class Foo < Object
+begin
+	def bar(x)
+	begin
+		x
+	end
+	def foo()
+	begin
+		1
+	end
+end
+
+(new Foo).foo()

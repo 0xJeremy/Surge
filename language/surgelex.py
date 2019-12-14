@@ -49,7 +49,7 @@ def SurgeLexer():
 		return t
 
 	def t_FID(t):
-		r'^@[\*\/\?\!a-zA-Z_+-]+'
+		r'@[\*\/\?\!a-zA-Z_+-]+'
 		if t.value in reserved:
 			t.type = reserved[t.value]
 		return t
