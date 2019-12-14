@@ -2,33 +2,35 @@
 
 import ply.lex as lex
 
-def SurgeLexer():
-	reserved = {
-		'class': 'CLASS',
-		'if':    'IF',
-		'then':  'THEN',
-		'else':  'ELSE',
-		'end':   'END',
-		'def':   'DEF',
-		'nil':   'NIL',
-		'self':  'SELF',
-		'begin': 'BEGIN',
-		'new':   'NEW',
-	}
+reserved = {
+	'class': 'CLASS',
+	'if':    'IF',
+	'then':  'THEN',
+	'else':  'ELSE',
+	'end':   'END',
+	'def':   'DEF',
+	'nil':   'NIL',
+	'self':  'SELF',
+	'begin': 'BEGIN',
+	'new':   'NEW',
+}
 
-	tokens = [
-		'INHERITS',
-		'LP',
-		'RP',
-		'COMMA',
-		'SEMI',
-		'DOT',
-		'EQ',
-		'STRING',
-		'ID',
-		'FID',
-		'NUMBER'
-	] + list(reserved.values())
+tokens = [
+	'INHERITS',
+	'LP',
+	'RP',
+	'COMMA',
+	'SEMI',
+	'DOT',
+	'EQ',
+	'STRING',
+	'ID',
+	'FID',
+	'NUMBER'
+] + list(reserved.values())
+
+
+def SurgeLexer():
 
 	t_INHERITS = r'\<'
 	t_LP       = r'\('
