@@ -3,7 +3,6 @@ from surgelex import tokens, SurgeLexer
 from ast import *
 
 def SurgeParser():
-	lexer = SurgeLexer()
 	def p_p(p):
 		'''program : class expression'''
 		p[0] = surge_prog(p[1], p[2])
@@ -68,4 +67,5 @@ def SurgeParser():
 		'''value : STRING'''
 		p[0] = EString(p[1])
 
+	lexer = SurgeLexer()
 	return yacc.yacc()

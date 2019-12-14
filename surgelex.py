@@ -69,7 +69,7 @@ def SurgeLexer():
 
 	def t_newline(t):
 		r'\n+'
-		t.lexer.lineno += len(t.value)
+		t.lexer.lineno += t.value.count("\n")
 
 	def t_error(t):
 		print("Illegal character '%s'" % t.value[0])
