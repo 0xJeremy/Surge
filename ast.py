@@ -1,5 +1,30 @@
 class Expr: pass
 
+##########################
+### LANGUAGE STRUCTURE ###
+##########################
+
+class surge_prog():
+	def __init__(self, prog_clss, prog_main):
+		self.prog_clss = prog_clss
+		self.prog_main = prog_main
+
+class cls():
+	def __init__(self, name, super, meths):
+		self.name = name
+		self.super = super
+		self.meths = meths
+
+class meth():
+	def __init__(self, name, args, body):
+		self.name = name
+		self.args = args
+		self.body = body
+
+##############
+### VALUES ###
+##############
+
 class EInt(Expr):
 	def __init__(self, value):
 		self.type = "EInt"
@@ -12,6 +37,10 @@ class ENil(Expr):
 class ESelf(Expr):
 	def __init__(self):
 		self.type = "ESelf"
+
+###################
+### EXPRESSIONS ###
+###################
 
 class EString(Expr):
 	def __init__(self, value):
@@ -64,20 +93,3 @@ class EInvoke(Expr):
 		self.value = value
 		self.name = name
 		self.args = args
-
-class meth():
-	def __init__(self, name, args, body):
-		self.name = name
-		self.args = args
-		self.body = body
-
-class cls():
-	def __init__(self, name, super, meths):
-		self.name = name
-		self.super = super
-		self.meths = meths
-
-class surge_prog():
-	def __init__(self, prog_clss, prog_main):
-		self.prog_clss = prog_clss
-		self.prog_main = prog_main
