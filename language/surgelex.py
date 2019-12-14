@@ -43,13 +43,13 @@ def SurgeLexer():
 	t_ignore   = ' \t'
 
 	def t_ID(t):
-		r'[a-zA-Z_+-/*//][a-zA-Z_0-9+-/*//]*'
+		r'[\*\/\?\!a-zA-Z_+-]+'
 		if t.value in reserved:
 			t.type = reserved[t.value]
 		return t
 
 	def t_FID(t):
-		r'^@[a-zA-Z_+-/*//][a-zA-Z_0-9+-/*//]*'
+		r'^@[\*\/\?\!a-zA-Z_+-]+'
 		if t.value in reserved:
 			t.type = reserved[t.value]
 		return t

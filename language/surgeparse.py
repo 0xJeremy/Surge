@@ -119,7 +119,7 @@ def SurgeParser():
 		'''params : expr
 				  | expr COMMA params'''
 		if len(p) == 2:
-			p[0] = p[1]
+			p[0] = [p[1]]
 		else:
 			p[0] = p[1] + [p[3]]
 

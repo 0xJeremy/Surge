@@ -188,13 +188,3 @@ def run(p):
 	elif type(v) == RInt: print(v.value)
 	elif type(v) == RStr: print(v.value)
 	elif type(v) == RLoc: print(v.value)
-
-
-	# if type(p) == surge_prog:
-	# 	print("PATTERN MATCHED PROG")
-	# 	cls = p.prog_clss
-	# 	main = p.prog_main
-	# 	print(type(main))
-	# 	if type(main) == EInt:
-	# 		print(main.value)
-
