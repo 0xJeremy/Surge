@@ -26,7 +26,8 @@ tokens = [
 	'STRING',
 	'ID',
 	'FID',
-	'NUMBER'
+	'NUMBER',
+	'EOF'
 ] + list(reserved.values())
 
 
@@ -74,6 +75,13 @@ def SurgeLexer():
 	def t_error(t):
 		print("Illegal character '%s'" % t.value[0])
 		t.lexer.skip(1)
+
+	def t_eof(t):
+		more = input('... ')
+		if more:
+			t.lexer.input(more)
+			return t.lexer.token()
+		return None
 
 	def t_COMMENT(t):
 		r'\#.*'

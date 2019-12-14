@@ -1,6 +1,6 @@
-from ast import *
-import ply.lex as lex
 import ply.yacc as yacc
+import ply.lex as lex
+from ast import *
 
 reserved = {
 	'class': 'CLASS',
@@ -28,6 +28,7 @@ tokens = [
 	'FID',
 	'NUMBER'
 ] + list(reserved.values())
+
 
 t_INHERITS = r'\<'
 t_LP       = r'\('
@@ -66,7 +67,7 @@ def t_STRING(t):
 
 def t_newline(t):
 	r'\n+'
-	t.lexer.lineno += len(t.value)
+	t.lexer.lineno += t.value.count("\n")
 
 def t_error(t):
 	print("Illegal character '%s'" % t.value[0])
@@ -76,7 +77,6 @@ def t_COMMENT(t):
 	r'\#.*'
 	pass
 
-lexer = lex.lex()
 
 def p_p(p):
 	'''program : class expression'''
@@ -142,5 +142,16 @@ def p_string(p):
 	'''value : STRING'''
 	p[0] = EString(p[1])
 
+def p_error(t):
+	print("Syntax error at '%s'" % t)
+
+lexer = lex.lex()
 parser = yacc.yacc()
 
+while True:
+	try:
+		s = input('S/> ')
+	except EOFError:
+		print()
+		break
+	parser.parse(s)
