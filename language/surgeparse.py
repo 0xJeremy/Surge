@@ -93,11 +93,11 @@ def SurgeParser():
 
 	def p_fid(p):
 		'''expr : FID'''
-		p[0] = EFldRd()
+		p[0] = EFldRd(p[1])
 
 	def p_fldwr(p):
 		'''expr : FID EQ expr'''
-		p[0] = ERldWr(p[1], p[3])
+		p[0] = EFldWr(p[1], p[3])
 
 	def p_if(p):
 		'''expr : IF expr THEN exprs ELSE exprs END'''
