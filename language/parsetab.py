@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'mainrightSEMIEQnonassocDOTBEGIN CLASS COMMA DEF DOT ELSE END EOF EQ FID ID IF INHERITS LP NEW NIL NUMBER RP SELF SEMI STRING THENmain : clss exprsclss : cls clss\n\t\t\t\t| emptycls : CLASS ID INHERITS ID BEGIN meths ENDmeths : meth meths\n\t\t\t\t | emptymeth : DEF ID LP ids RP exprs ENDids : ID\n\t\t\t   | ID COMMA idsids : emptyexprs : expr\n\t\t\t\t | expr SEMI exprsexpr : NUMBERexpr : NILexpr : SELFexpr : STRINGexpr : IDexpr : ID EQ exprexpr : FIDexpr : FID EQ exprexpr : IF expr THEN exprs ELSE exprs ENDexpr : expr DOT ID LP params RPexpr : NEW IDexpr : LP exprs RPparams : empty\n\t\t\t\t  | expr\n\t\t\t\t  | expr COMMA paramsempty : '
+_lr_signature = 'mainrightSEMIEQnonassocDOTBEGIN CLASS COMMA DEF DOT ELSE END EOF EQ FID ID IF INHERITS LP NEW NIL NUMBER RP SELF SEMI STRING THENmain : clss exprsclss : cls clss\n\t\t\t\t| emptycls : CLASS ID INHERITS ID BEGIN meths ENDmeths : meth meths\n\t\t\t\t | emptymeth : DEF ID LP ids RP exprs ENDids : ID\n\t\t\t   | ID COMMA idsids : emptyexprs : expr\n\t\t\t\t | expr SEMI exprsexpr : NUMBERexpr : NILexpr : SELFexpr : STRINGexpr : IDexpr : ID EQ exprexpr : FIDexpr : FID EQ exprexpr : IF expr THEN exprs ELSE exprs ENDexpr : expr DOT ID LP params RPexpr : NEW IDexpr : LP exprs RPparams : expr\n\t\t\t\t  | expr COMMA paramsparams : emptyempty : '
     
-_lr_action_items = {'CLASS':([0,3,48,],[5,5,-4,]),'NUMBER':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,8,-28,-3,8,8,-2,8,8,8,8,8,8,8,-4,8,]),'NIL':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,9,-28,-3,9,9,-2,9,9,9,9,9,9,9,-4,9,]),'SELF':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,10,-28,-3,10,10,-2,10,10,10,10,10,10,10,-4,10,]),'STRING':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,11,-28,-3,11,11,-2,11,11,11,11,11,11,11,-4,11,]),'ID':([0,2,3,4,5,14,15,16,17,19,20,21,22,26,31,34,40,44,45,48,53,57,58,],[-28,12,-28,-3,18,12,12,25,-2,12,28,12,12,33,12,12,12,50,12,-4,54,54,12,]),'FID':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,13,-28,-3,13,13,-2,13,13,13,13,13,13,13,-4,13,]),'IF':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,14,-28,-3,14,14,-2,14,14,14,14,14,14,14,-4,14,]),'NEW':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,16,-28,-3,16,16,-2,16,16,16,16,16,16,16,-4,16,]),'LP':([0,2,3,4,14,15,17,19,21,22,28,31,34,40,45,48,50,58,],[-28,15,-28,-3,15,15,-2,15,15,15,34,15,15,15,15,-4,53,15,]),'$end':([1,6,7,8,9,10,11,12,13,25,27,29,30,32,46,52,],[0,-1,-11,-13,-14,-15,-16,-17,-19,-23,-12,-18,-20,-24,-22,-21,]),'RP':([7,8,9,10,11,12,13,24,25,27,29,30,32,34,37,38,39,45,46,51,52,53,54,55,56,57,59,],[-11,-13,-14,-15,-16,-17,-19,32,-23,-12,-18,-20,-24,-28,-26,46,-25,-28,-22,-27,-21,-28,-8,58,-10,-28,-9,]),'ELSE':([7,8,9,10,11,12,13,25,27,29,30,32,35,46,52,],[-11,-13,-14,-15,-16,-17,-19,-23,-12,-18,-20,-24,40,-22,-21,]),'END':([7,8,9,10,11,12,13,25,27,29,30,32,36,41,42,43,46,47,49,52,60,61,],[-11,-13,-14,-15,-16,-17,-19,-23,-12,-18,-20,-24,-28,48,-28,-6,-22,52,-5,-21,61,-7,]),'SEMI':([7,8,9,10,11,12,13,25,29,30,32,46,52,],[19,-13,-14,-15,-16,-17,-19,-23,-18,-20,-24,-22,-21,]),'DOT':([7,8,9,10,11,12,13,23,25,29,30,32,37,46,52,],[20,-13,-14,-15,-16,-17,-19,20,-23,20,20,-24,20,-22,-21,]),'THEN':([8,9,10,11,12,13,23,25,29,30,32,46,52,],[-13,-14,-15,-16,-17,-19,31,-23,-18,-20,-24,-22,-21,]),'COMMA':([8,9,10,11,12,13,25,29,30,32,37,46,52,54,],[-13,-14,-15,-16,-17,-19,-23,-18,-20,-24,45,-22,-21,57,]),'EQ':([12,13,],[21,22,]),'INHERITS':([18,],[26,]),'BEGIN':([33,],[36,]),'DEF':([36,42,61,],[44,44,-7,]),}
+_lr_action_items = {'CLASS':([0,3,48,],[5,5,-4,]),'NUMBER':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,8,-28,-3,8,8,-2,8,8,8,8,8,8,8,-4,8,]),'NIL':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,9,-28,-3,9,9,-2,9,9,9,9,9,9,9,-4,9,]),'SELF':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,10,-28,-3,10,10,-2,10,10,10,10,10,10,10,-4,10,]),'STRING':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,11,-28,-3,11,11,-2,11,11,11,11,11,11,11,-4,11,]),'ID':([0,2,3,4,5,14,15,16,17,19,20,21,22,26,31,34,40,44,45,48,53,57,58,],[-28,12,-28,-3,18,12,12,25,-2,12,28,12,12,33,12,12,12,50,12,-4,54,54,12,]),'FID':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,13,-28,-3,13,13,-2,13,13,13,13,13,13,13,-4,13,]),'IF':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,14,-28,-3,14,14,-2,14,14,14,14,14,14,14,-4,14,]),'NEW':([0,2,3,4,14,15,17,19,21,22,31,34,40,45,48,58,],[-28,16,-28,-3,16,16,-2,16,16,16,16,16,16,16,-4,16,]),'LP':([0,2,3,4,14,15,17,19,21,22,28,31,34,40,45,48,50,58,],[-28,15,-28,-3,15,15,-2,15,15,15,34,15,15,15,15,-4,53,15,]),'$end':([1,6,7,8,9,10,11,12,13,25,27,29,30,32,46,52,],[0,-1,-11,-13,-14,-15,-16,-17,-19,-23,-12,-18,-20,-24,-22,-21,]),'RP':([7,8,9,10,11,12,13,24,25,27,29,30,32,34,37,38,39,45,46,51,52,53,54,55,56,57,59,],[-11,-13,-14,-15,-16,-17,-19,32,-23,-12,-18,-20,-24,-28,-25,46,-27,-28,-22,-26,-21,-28,-8,58,-10,-28,-9,]),'ELSE':([7,8,9,10,11,12,13,25,27,29,30,32,35,46,52,],[-11,-13,-14,-15,-16,-17,-19,-23,-12,-18,-20,-24,40,-22,-21,]),'END':([7,8,9,10,11,12,13,25,27,29,30,32,36,41,42,43,46,47,49,52,60,61,],[-11,-13,-14,-15,-16,-17,-19,-23,-12,-18,-20,-24,-28,48,-28,-6,-22,52,-5,-21,61,-7,]),'SEMI':([7,8,9,10,11,12,13,25,29,30,32,46,52,],[19,-13,-14,-15,-16,-17,-19,-23,-18,-20,-24,-22,-21,]),'DOT':([7,8,9,10,11,12,13,23,25,29,30,32,37,46,52,],[20,-13,-14,-15,-16,-17,-19,20,-23,20,20,-24,20,-22,-21,]),'THEN':([8,9,10,11,12,13,23,25,29,30,32,46,52,],[-13,-14,-15,-16,-17,-19,31,-23,-18,-20,-24,-22,-21,]),'COMMA':([8,9,10,11,12,13,25,29,30,32,37,46,52,54,],[-13,-14,-15,-16,-17,-19,-23,-18,-20,-24,45,-22,-21,57,]),'EQ':([12,13,],[21,22,]),'INHERITS':([18,],[26,]),'BEGIN':([33,],[36,]),'DEF':([36,42,61,],[44,44,-7,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -28,31 +28,31 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> main","S'",1,None,None,None),
   ('main -> clss exprs','main',2,'p_main','surgeparse.py',19),
-  ('clss -> cls clss','clss',2,'p_clss','surgeparse.py',24),
-  ('clss -> empty','clss',1,'p_clss','surgeparse.py',25),
-  ('cls -> CLASS ID INHERITS ID BEGIN meths END','cls',7,'p_cls','surgeparse.py',32),
-  ('meths -> meth meths','meths',2,'p_meths','surgeparse.py',36),
-  ('meths -> empty','meths',1,'p_meths','surgeparse.py',37),
-  ('meth -> DEF ID LP ids RP exprs END','meth',7,'p_meth','surgeparse.py',44),
-  ('ids -> ID','ids',1,'p_ids','surgeparse.py',52),
-  ('ids -> ID COMMA ids','ids',3,'p_ids','surgeparse.py',53),
-  ('ids -> empty','ids',1,'p_ids_empty','surgeparse.py',60),
-  ('exprs -> expr','exprs',1,'p_exprs','surgeparse.py',64),
-  ('exprs -> expr SEMI exprs','exprs',3,'p_exprs','surgeparse.py',65),
-  ('expr -> NUMBER','expr',1,'p_int','surgeparse.py',72),
-  ('expr -> NIL','expr',1,'p_nil','surgeparse.py',77),
-  ('expr -> SELF','expr',1,'p_self','surgeparse.py',81),
-  ('expr -> STRING','expr',1,'p_string','surgeparse.py',85),
-  ('expr -> ID','expr',1,'p_id','surgeparse.py',89),
-  ('expr -> ID EQ expr','expr',3,'p_locwr','surgeparse.py',93),
-  ('expr -> FID','expr',1,'p_fid','surgeparse.py',97),
-  ('expr -> FID EQ expr','expr',3,'p_fldwr','surgeparse.py',101),
-  ('expr -> IF expr THEN exprs ELSE exprs END','expr',7,'p_if','surgeparse.py',105),
-  ('expr -> expr DOT ID LP params RP','expr',6,'p_invoke','surgeparse.py',109),
-  ('expr -> NEW ID','expr',2,'p_new','surgeparse.py',113),
-  ('expr -> LP exprs RP','expr',3,'p_paren','surgeparse.py',117),
-  ('params -> empty','params',1,'p_params','surgeparse.py',121),
-  ('params -> expr','params',1,'p_params','surgeparse.py',122),
-  ('params -> expr COMMA params','params',3,'p_params','surgeparse.py',123),
-  ('empty -> <empty>','empty',0,'p_empty','surgeparse.py',136),
+  ('clss -> cls clss','clss',2,'p_clss','surgeparse.py',23),
+  ('clss -> empty','clss',1,'p_clss','surgeparse.py',24),
+  ('cls -> CLASS ID INHERITS ID BEGIN meths END','cls',7,'p_cls','surgeparse.py',31),
+  ('meths -> meth meths','meths',2,'p_meths','surgeparse.py',35),
+  ('meths -> empty','meths',1,'p_meths','surgeparse.py',36),
+  ('meth -> DEF ID LP ids RP exprs END','meth',7,'p_meth','surgeparse.py',43),
+  ('ids -> ID','ids',1,'p_ids','surgeparse.py',51),
+  ('ids -> ID COMMA ids','ids',3,'p_ids','surgeparse.py',52),
+  ('ids -> empty','ids',1,'p_ids_empty','surgeparse.py',59),
+  ('exprs -> expr','exprs',1,'p_exprs','surgeparse.py',63),
+  ('exprs -> expr SEMI exprs','exprs',3,'p_exprs','surgeparse.py',64),
+  ('expr -> NUMBER','expr',1,'p_int','surgeparse.py',71),
+  ('expr -> NIL','expr',1,'p_nil','surgeparse.py',75),
+  ('expr -> SELF','expr',1,'p_self','surgeparse.py',79),
+  ('expr -> STRING','expr',1,'p_string','surgeparse.py',83),
+  ('expr -> ID','expr',1,'p_id','surgeparse.py',87),
+  ('expr -> ID EQ expr','expr',3,'p_locwr','surgeparse.py',91),
+  ('expr -> FID','expr',1,'p_fid','surgeparse.py',95),
+  ('expr -> FID EQ expr','expr',3,'p_fldwr','surgeparse.py',99),
+  ('expr -> IF expr THEN exprs ELSE exprs END','expr',7,'p_if','surgeparse.py',103),
+  ('expr -> expr DOT ID LP params RP','expr',6,'p_invoke','surgeparse.py',107),
+  ('expr -> NEW ID','expr',2,'p_new','surgeparse.py',111),
+  ('expr -> LP exprs RP','expr',3,'p_paren','surgeparse.py',115),
+  ('params -> expr','params',1,'p_params','surgeparse.py',119),
+  ('params -> expr COMMA params','params',3,'p_params','surgeparse.py',120),
+  ('params -> empty','params',1,'p_params_empty','surgeparse.py',127),
+  ('empty -> <empty>','empty',0,'p_empty','surgeparse.py',135),
 ]

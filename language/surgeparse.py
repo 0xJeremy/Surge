@@ -116,15 +116,16 @@ def SurgeParser():
 		p[0] = p[2]
 
 	def p_params(p):
-		'''params : empty
-				  | expr
+		'''params : expr
 				  | expr COMMA params'''
-		if len(p) == 1:
-			p[0] = []
-		elif len(p) == 2:
+		if len(p) == 2:
 			p[0] = p[1]
 		else:
 			p[0] = p[1] + [p[3]]
+
+	def p_params_empty(p):
+		'''params : empty'''
+		p[0] = []
 
 	###############
 	### HELPERS ###

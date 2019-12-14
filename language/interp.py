@@ -118,54 +118,61 @@ def eval(p, A, H, e):
 			return A, H, RLoc(loc)
 		raise Fail
 	elif type(e) == EInvoke:
-		meth = e.name
-		A, H, v_receiver = eval(p, A, H, e.value)
-		v_args = []
-		for item in e.args:
-			A, H, v_arg = eval(p, A, H, item)
-			v_args.append(v_arg)
-		if type(v_receiver) == RInt:
-			n = v_receiver.value
-			if len(v_args) == 1 and type(v_args[0]) == RInt:
-				m = v_args[0].value
-				if meth == "+": return A, H, RInt(n+m)
-				if meth == "-": return A, H, RInt(n-m)
-				if meth == "*": return A, H, RInt(n*m)
-				if meth == "/": return A, H, RInt(n/m)
-				if meth == "equal?": return A, H, RInt(1) if n == m else A, H, RNil()
-			if len(v_args) == 0:
-				if meth == "to_s": return A, H, RStr(str(n))
-				if meth == "print": print(n); return A, H, RNil()
-			raise NoSuchMethod
-		if type(v_receiver) == RStr:
-			s = v_receiver.value
-			if len(v_args) == 0:
-				if meth == "length": return A, H, RInt(len(s))
-				if meth == "to_s": return A, H, RStr(s)
-				if meth == "print": print(s); return A, H, RNil()
-			if len(v_args) == 1 and type(v_args[0]) == RStr:
-				s1 = v_args[0].value
-				if meth == "+": return A, H, RStr(s+s1)
-				if meth == "equal?": return A, H, RInt(1) if s == s1 else A, H, RNil()
-			raise NoSuchMethod
-		if type(v_receiver) == RLoc:
-			loc = v_receiver.value
-			if len(v_args) == 0:
-				if meth == "to_s": return A, H, RStr(loc)
-				if meth == "print": print(loc); return A, H, RNil()
-			if len(v_args) == 1 and type(v_args[0]) == RLoc:
-				loc1 = v_args[0].value
-				if meth == "equal?": return A, H, RInt(1) if loc == loc1 else A, H, RNil()
-			cur_object = lookup(loc, H)
-			if cur_object is None: raise Fail
-			meth = lookup_meth(p, cur_object.name, meth)
-			if meth is None: raise NoSuchMethod
-			if len(v_args) != len(meth.args): raise NoSuchMethod
-			tmp_A = {}
-			update(tmp_A, ("self", RLoc(loc)))
-			map(lambda item: update(tmp_A, item), zip(meth.args, v_args))
-			tmp_A, H, s = eval(p, tmp_A, H, meth)
-			return A, H, s
+		return invoke(p, A, H, e)
+		
+###############################
+### INVOKE DYNAMIC DISPATCH ###
+###############################
+
+def invoke(p, A, H, e):
+	meth = e.name
+	A, H, v_receiver = eval(p, A, H, e.value)
+	v_args = []
+	for item in e.args:
+		A, H, v_arg = eval(p, A, H, item)
+		v_args.append(v_arg)
+	if type(v_receiver) == RInt:
+		n = v_receiver.value
+		if len(v_args) == 1 and type(v_args[0]) == RInt:
+			m = v_args[0].value
+			if meth == "+": return A, H, RInt(n+m)
+			if meth == "-": return A, H, RInt(n-m)
+			if meth == "*": return A, H, RInt(n*m)
+			if meth == "/": return A, H, RInt(n/m)
+			if meth == "equal?": return A, H, RInt(1) if n == m else A, H, RNil()
+		if len(v_args) == 0:
+			if meth == "to_s": return A, H, RStr(str(n))
+			if meth == "print": print(n); return A, H, RNil()
+		raise NoSuchMethod
+	if type(v_receiver) == RStr:
+		s = v_receiver.value
+		if len(v_args) == 0:
+			if meth == "length": return A, H, RInt(len(s))
+			if meth == "to_s": return A, H, RStr(s)
+			if meth == "print": print(s); return A, H, RNil()
+		if len(v_args) == 1 and type(v_args[0]) == RStr:
+			s1 = v_args[0].value
+			if meth == "+": return A, H, RStr(s+s1)
+			if meth == "equal?": return A, H, RInt(1) if s == s1 else A, H, RNil()
+		raise NoSuchMethod
+	if type(v_receiver) == RLoc:
+		loc = v_receiver.value
+		if len(v_args) == 0:
+			if meth == "to_s": return A, H, RStr(loc)
+			if meth == "print": print(loc); return A, H, RNil()
+		if len(v_args) == 1 and type(v_args[0]) == RLoc:
+			loc1 = v_args[0].value
+			if meth == "equal?": return A, H, RInt(1) if loc == loc1 else A, H, RNil()
+		cur_object = lookup(loc, H)
+		if cur_object is None: raise Fail
+		meth = lookup_meth(p, cur_object.name, meth)
+		if meth is None: raise NoSuchMethod
+		if len(v_args) != len(meth.args): raise NoSuchMethod
+		tmp_A = {}
+		update(tmp_A, ("self", RLoc(loc)))
+		map(lambda item: update(tmp_A, item), zip(meth.args, v_args))
+		tmp_A, H, s = eval(p, tmp_A, H, meth)
+		return A, H, s
 
 
 

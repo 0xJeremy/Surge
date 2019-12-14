@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+
+import os
+from subprocess import Popen, PIPE
+
+def prRed(skk): print("\033[91m {}\033[00m" .format(skk))
+def prGreen(skk): print("\033[92m {}\033[00m" .format(skk))
+def prYellow(skk): print("\033[93m {}\033[00m" .format(skk))
+
+DEVNULL = open(os.devnull, 'w')
+INPUT = "test.sg"
+OUTPUT = "out.sg"
+DELIM_BEGIN = "# BEGIN TEST"
+DELIM_END = "# END TEST"
+DELIM_EXPECT = "#"
+
+tests = []
+all_passing = True
+
+def writeFile(prog):
+	with open(OUTPUT, "w+") as f:
+		for line in prog:
+			f.write(line)
+
+def testProg(num):
+	global all_passing
+	process = Popen(["./surge", OUTPUT], stdout=PIPE, stderr=DEVNULL)
+	(cout, err) = process.communicate()
+	passed = cout.decode().replace('\n', '') == '1'
+	if passed:
+		prGreen("[PASSED] Test {}".format(num))
+	else:
+		prRed("[FAILED] Test {}".format(num))
+		prRed('\t' + cout.decode())
+
+with open(INPUT, "r") as f:
+	reading_test = False
+	test = []
+	for line in f:
+		if line.startswith(DELIM_BEGIN) and not reading_test:
+			reading_test = True
+		elif line.startswith(DELIM_END) and reading_test:
+			reading_test = False
+			tests.append(test)
+			test = []
+		if reading_test and line[0] != '#':
+			test.append(line)
+
+num_tests = 1
+for test in tests:
+	writeFile(test)
+	testProg(num_tests)
+	num_tests += 1
