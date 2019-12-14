@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+import sys
+from surgeparse import SurgeParser
+from interp import run
+
+
+def main(file):
+	lines = []
+	with open(file, 'r') as f:
+		for line in f:
+			lines.append(line)
+	program = ' '.join(lines)
+	parser = SurgeParser()
+	main = parser.parse(program)
+	run(main)
+
+
+if __name__ == '__main__':
+	file = sys.argv[1]
+	main(file)

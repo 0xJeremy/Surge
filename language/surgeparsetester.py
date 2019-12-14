@@ -15,5 +15,6 @@ while True:
 		print("PATTERN MATCHED PROG")
 		cls = x.prog_clss
 		main = x.prog_main
+		print(type(main))
 		if type(main) == EInt:
 			print(main.value)
