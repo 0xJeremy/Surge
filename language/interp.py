@@ -1,6 +1,6 @@
 from ast import *
 
-class CannotFindA(Exception):
+class CannotFindInA(Exception):
 	pass
 class CannotFindVariable(Exception):
 	pass
@@ -23,8 +23,8 @@ class RLoc(SurgeVal):
 		self.value = value
 
 class object():
-	def __init__(self, cls, fields):
-		self.cls = cls
+	def __init__(self, class_name, fields):
+		self.class_name = class_name
 		self.fields = fields
 
 def lookup(key, env):
@@ -46,11 +46,42 @@ def eval(p, A, H, e):
 	elif type(e) == ESelf: return A, H, RStr("self")
 	elif type(e) == EString: return A, H, RStr(e.value)
 	elif type(e) == ELocRd: 
-		if lookup(A, e.value) is not None:
-			return lookup(A, e.value)
-		raise CannotFindA
+		if lookup(e.value, A) is not None:
+			return A, H, lookup(e.value, A)
+		raise CannotFindInA
 	elif type(e) == ELocWr:
-		A, H, v = eval(p, A, H, e)
+		A, H, v = eval(p, A, H, e.expr)
+		update(A, (e.value, v))
+		return A, H, v
+	elif type(e) == EFldRd:
+		loc = lookup("self", A)
+		if loc is None: raise CannotFindInA
+		cur_object = lookup(loc, H)
+		if cur_object is None: raise Fail
+		value = lookup(e.value, cur_object.fields)
+		if value is None: raise Fail
+		return A, H, value
+	elif type(e) == EFldWr:
+		A, H, v = eval(p, A, H, e.expr)
+		loc = lookup("self", A)
+		if loc is None: raise Fail
+		cur_object = lookup(loc, H)
+		if cur_object is None: raise Fail
+		update(cur_object.fields, (e.value, v))
+		return A, H, v
+	elif type(e) == EIf:
+		A, H, v = eval(p, A, H, e.guard)
+		if type(v) == RNil:
+			return eval(p, A, H, e.expr1)
+		return eval(p, A, H, e.expr2)
+	elif type(e) == ESeq:
+		A, H, v = eval(p, A, H, e.expr1)
+		return eval(p, A, H, e.expr2)
+	elif type(e) == ENew:
+		if   e.value == "String": return A, H, RStr("")
+		elif e.value == "Int": return A, H, RInt(0)
+		elif e.value == "Bot": raise Fail
+		
 
 
 def run(p):
@@ -60,7 +91,7 @@ def run(p):
 	loc = fresh_location()
 	update(H, (loc, object("Object", [])))
 	update(A, ("self", loc))
-	A1, H1, v = eval(p, A, H, e)
+	A, H, v = eval(p, A, H, e)
 	if   type(v) == RNil: print("nil")
 	elif type(v) == RInt: print(v.value)
 	elif type(v) == RStr: print(v.value)
