@@ -60,6 +60,12 @@ x
 
 # BEGIN TEST ##############################################
 
+1.print()
+
+# END TEST   ##############################################
+
+# BEGIN TEST ##############################################
+
 class Foo < Object
 begin
 end
@@ -120,6 +126,43 @@ begin
 end
 
 (new Foo).foo()
+
+# END TEST   ##############################################
+
+# BEGIN TEST ##############################################
+
+class Foo < Object
+begin
+	def bar(x)
+	begin
+		x
+	end
+	def foo()
+	begin
+		1
+	end
+end
+
+(new Foo).bar(1)
+
+# END TEST   ##############################################
+
+# BEGIN TEST ##############################################
+
+class Foo < Object
+begin
+	def bar(x)
+	begin
+		@x = x;
+		@x
+	end
+	def foo()
+	begin
+		1
+	end
+end
+
+(new Foo).bar(1)
 
 # END TEST   ##############################################
 

@@ -56,7 +56,6 @@ def fresh_location():
 #############################
 
 def defined_class(p, name):
-	print(p.prog_clss)
 	for obj in p.prog_clss:
 		if obj.name == name:
 			return True
@@ -166,13 +165,13 @@ def invoke(p, A, H, e):
 			if meth == "equal?": return A, H, RInt(1) if loc == loc1 else A, H, RNil()
 		cur_object = lookup(loc, H)
 		if cur_object is None: raise Fail
-		meth = lookup_meth(p, cur_object.class_name, meth)
+		meth = lookup_meth(p, cur_object.class_name.value, meth)
 		if meth is None: raise NoSuchMethod
 		if len(v_args) != len(meth.args): raise NoSuchMethod
 		tmp_A = {}
 		update(tmp_A, ("self", RLoc(loc)))
-		map(lambda item: update(tmp_A, item), zip(meth.args, v_args))
-		tmp_A, H, s = eval(p, tmp_A, H, meth)
+		[update(tmp_A, item) for item in zip(meth.args, v_args)]
+		tmp_A, H, s = eval(p, tmp_A, H, meth.body)
 		return A, H, s
 
 ######################

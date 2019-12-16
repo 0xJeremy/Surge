@@ -26,7 +26,7 @@ def testProg(num):
 	global all_passing
 	process = Popen(["./surge", OUTPUT], stdout=PIPE, stderr=DEVNULL)
 	(cout, err) = process.communicate()
-	passed = cout.decode().replace('\n', '') == '1'
+	passed = cout.decode().replace('\n', '')[0] == '1'
 	if passed:
 		prGreen("[PASSED] Test {}".format(num))
 	else:

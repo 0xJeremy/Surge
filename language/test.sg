@@ -2,7 +2,8 @@ class Foo < Object
 begin
 	def bar(x)
 	begin
-		x
+		@x = x;
+		@x
 	end
 	def foo()
 	begin
@@ -10,4 +11,4 @@ begin
 	end
 end
 
-(new Foo).foo()
+(new Foo).bar(1)

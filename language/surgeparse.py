@@ -25,7 +25,8 @@ def SurgeParser():
 		if len(p) == 2:
 			p[0] = []
 		else:
-			p[0] = p[1] + [p[2]]
+			if p[2] != []: p[0] = p[1] + [p[2]]
+			else: p[0] = p[1]
 
 	def p_cls(p):
 		'''cls : CLASS ID INHERITS ID BEGIN meths END'''
@@ -37,11 +38,12 @@ def SurgeParser():
 		if len(p) == 2:
 			p[0] = []
 		else:
-			p[0] = p[1] + [p[2]]
+			if p[2] != []: p[0] = [p[1]] + [p[2]]
+			else: p[0] = p[1]
 
 	def p_meth(p):
 		'''meth : DEF ID LP ids RP BEGIN exprs END'''
-		p[0] = [meth(p[2], p[4], p[7])]
+		p[0] = meth(p[2], p[4], p[7])
 
 	###########################
 	### IDS AND EXPRESSIONS ###
