@@ -169,7 +169,7 @@ def invoke(p, A, H, e):
 		if meth is None: raise NoSuchMethod
 		if len(v_args) != len(meth.args): raise NoSuchMethod
 		tmp_A = {}
-		update(tmp_A, ("self", RLoc(loc)))
+		update(tmp_A, ("self", loc))
 		[update(tmp_A, item) for item in zip(meth.args, v_args)]
 		tmp_A, H, s = eval(p, tmp_A, H, meth.body)
 		return A, H, s
