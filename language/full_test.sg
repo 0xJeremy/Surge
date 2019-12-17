@@ -1,0 +1,141 @@
+#########################
+### CLASS DEFINITIONS ###
+#########################
+
+class Foo < Object
+begin
+	def init(t)
+		@local = 1;
+		@locall = 2;
+		@x = nil;
+		@t = t;
+		nil
+	end
+	def print()
+		(new UNIT_TEST).p("override print")
+	end
+	def equal?(x)
+		(new UNIT_TEST).p("override equal?")
+	end
+	def test_locals()
+		if @local = 1 then @t.p("class variables") else @t.f("class variables") end;
+		if @locall = 2 then @t.p("class variables") else @t.f("class variables") end;
+		nil
+	end
+	def to_s()
+		"to_s"
+	end
+	def give_object(t)
+		t.p("object passing")
+	end
+	def set_local(x)
+		@x = x
+	end
+	def get_local()
+		@x
+	end
+end
+
+class Factorial < Object
+begin
+	def go(x)
+		if x.equal?(1) then 1 else x.*((new Factorial).go(x.-(1))) end
+	end
+end
+
+###########################
+### UNIT TESTING MODULE ###
+###########################
+
+class UNIT_TEST < Object
+begin
+	def p(x)
+		("[Passed] ".+(x)).print()
+	end
+	def f(x)
+		("[Failed] ".+(x)).print()
+	end
+	def assert(name, ea)
+		t = new UNIT_TEST;
+		if ea then t.p(name) else t.f(name) end
+	end
+	def assert_not(name, ea)
+		t = new UNIT_TEST;
+		if ea then t.f(name) else t.p(name) end
+	end
+end
+
+t = new UNIT_TEST;
+
+###################
+### INT TESTING ###
+###################
+
+x = 1;
+y = 10;
+
+new_x = x.*(10);
+
+t.assert("x = y", new_x.equal?(y));
+t.assert_not("x = y", x.equal?(y));
+
+###################
+### NIL TESTING ###
+###################
+
+t.assert_not("nil", nil);
+
+x = nil;
+y = nil;
+
+######################
+### STRING TESTING ###
+######################
+
+t.assert("equal?", "Hello".equal?("Hello"));
+
+t.assert_not("equal?", "Hello".equal?("Goodbye"));
+
+#######################
+### ID/SELF TESTING ###
+#######################
+
+@x = 1;
+@y = 10;
+
+@new_x = @x.*(10);
+
+t.assert("@x = @y", @new_x.equal?(@y));
+t.assert_not("@x = @y", @x.equal?(@y));
+
+##########################
+### OBJECT/NEW TESTING ###
+##########################
+
+(new Foo).print();
+(new Foo).equal?(new Foo);
+
+tt = new UNIT_TEST;
+ttt = new UNIT_TEST;
+
+t.assert_not("NEW", tt.equal?(ttt));
+
+foo = new Foo;
+foo.init(t);
+foo.test_locals();
+
+foo.give_object(t);
+
+fact = new Factorial;
+
+t.assert("recursion", fact.go(5).equal?(120));
+t.assert("recursion", fact.go(10).equal?(3628800));
+
+foo = new Foo;
+foo.init(t);
+t.assert_not("nil x", foo.get_local());
+foo.set_local(999);
+t.assert("set x", 999.equal?(foo.get_local()));
+
+t.assert((new Factorial).to_s(), (new Factorial).to_s().equal?("[Object object]"))
+# t.assert(foo.to_s(), foo.to_s().equal?("to_s"))

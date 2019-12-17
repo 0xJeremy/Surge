@@ -52,3 +52,8 @@ for test in tests:
 	writeFile(test)
 	testProg(num_tests)
 	num_tests += 1
+
+print("\033[93m")
+process = Popen(["./surge", 'full_test.sg'])
+(cout, cerr) = process.communicate()
+print("\033[00m")
