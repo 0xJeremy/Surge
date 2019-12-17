@@ -102,7 +102,7 @@ def eval(p, A, H, e):
 		return A, H, v
 	elif type(e) == EIf:
 		A, H, v = eval(p, A, H, e.guard)
-		if type(v) == RNil:
+		if type(v) != RNil:
 			return eval(p, A, H, e.expr1)
 		return eval(p, A, H, e.expr2)
 	elif type(e) == ESeq:

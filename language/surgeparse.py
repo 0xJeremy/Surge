@@ -38,12 +38,12 @@ def SurgeParser():
 		if len(p) == 2:
 			p[0] = []
 		else:
-			if p[2] != []: p[0] = [p[1]] + [p[2]]
-			else: p[0] = p[1]
+			if p[2] != []: p[0] = [p[1]] + p[2]
+			else: p[0] = [p[1]]
 
 	def p_meth(p):
-		'''meth : DEF ID LP ids RP BEGIN exprs END'''
-		p[0] = meth(p[2], p[4], p[7])
+		'''meth : DEF ID LP ids RP exprs END'''
+		p[0] = meth(p[2], p[4], p[6])
 
 	###########################
 	### IDS AND EXPRESSIONS ###
@@ -55,7 +55,8 @@ def SurgeParser():
 		if len(p) == 2:
 			p[0] = p[1]
 		elif len(p) == 4:
-			p[0] = ESeq(p[1], p[3])
+			if type(p[3]) == list: p[0] = [p[1]] + p[3]
+			else: p[0] = [p[1], p[3]]
 
 	def p_ids_empty(p):
 		'''ids : empty'''
@@ -123,7 +124,7 @@ def SurgeParser():
 		if len(p) == 2:
 			p[0] = [p[1]]
 		else:
-			p[0] = p[1] + [p[3]]
+			p[0] = [p[1]] + p[3]
 
 	def p_params_empty(p):
 		'''params : empty'''

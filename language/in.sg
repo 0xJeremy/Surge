@@ -79,11 +79,9 @@ end
 class Foo < Object
 begin
 	def bar(x)
-	begin
 		x
 	end
 	def bar()
-	begin
 		1
 	end
 end
@@ -97,11 +95,9 @@ end
 class Foo < Object
 begin
 	def bar(x)
-	begin
 		x
 	end
 	def foo()
-	begin
 		1
 	end
 end
@@ -116,11 +112,9 @@ end
 class Foo < Object
 begin
 	def bar(x)
-	begin
 		x
 	end
 	def foo()
-	begin
 		1
 	end
 end
@@ -134,11 +128,9 @@ end
 class Foo < Object
 begin
 	def bar(x)
-	begin
 		x
 	end
 	def foo()
-	begin
 		1
 	end
 end
@@ -152,17 +144,70 @@ end
 class Foo < Object
 begin
 	def bar(x)
-	begin
 		@x = x;
 		@x
 	end
 	def foo()
-	begin
 		1
 	end
 end
 
 (new Foo).bar(1)
+
+# END TEST   ##############################################
+
+# BEGIN TEST ##############################################
+
+class C < Object
+begin
+  def m(a, b)
+    a.+(b)
+  end
+end
+
+@x = new C;
+@x.m(0, 1)
+
+# END TEST   ##############################################
+
+# BEGIN TEST ##############################################
+
+class C < Object
+begin
+  def m(a, b, c)
+    a.+(b).+(c)
+  end
+end
+
+@x = new C;
+@x.m(0, 1, 0)
+
+# END TEST   ##############################################
+
+# BEGIN TEST ##############################################
+
+class C < Object
+begin
+  def m(a, b, c, d)
+    a.+(b).+(c).+(d)
+  end
+end
+
+@x = new C;
+@x.m(0, 1, 0, 0)
+
+# END TEST   ##############################################
+
+# BEGIN TEST ##############################################
+
+class Foo < Object
+begin
+  def mymethod(x)
+    if x then 2 else 1 end
+  end
+end
+
+(new Foo).mymethod(nil)
 
 # END TEST   ##############################################
 

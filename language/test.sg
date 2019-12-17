@@ -1,14 +1,9 @@
-class Foo < Object
+class C < Object
 begin
-	def bar(x)
-	begin
-		@x = x;
-		@x
-	end
-	def foo()
-	begin
-		1
-	end
+  def m(a, b, c)
+    a.+(b).+(c)
+  end
 end
 
-(new Foo).bar(1)
+@x = new C;
+@x.m(0, 1, 0)

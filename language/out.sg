@@ -1,16 +1,10 @@
 
 class Foo < Object
 begin
-	def bar(x)
-	begin
-		@x = x;
-		@x
-	end
-	def foo()
-	begin
-		1
-	end
+  def mymethod(x)
+    if x then 2 else 1 end
+  end
 end
 
-(new Foo).bar(1)
+(new Foo).mymethod(nil)
 
