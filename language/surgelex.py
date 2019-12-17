@@ -64,8 +64,8 @@ def SurgeLexer():
 		return t
 
 	def t_STRING(t):
-		r'^"$"'
-		t.value = string(t.value)
+		r'"[\@\=\[\]\n\ \*\/\?\!a-zA-Z0-9_+-]*"'
+		t.value = str(t.value.replace('"', ''))
 		return t
 
 	def t_newline(t):

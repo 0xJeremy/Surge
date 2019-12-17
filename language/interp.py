@@ -139,7 +139,10 @@ def invoke(p, A, H, e):
 			if meth == "-": return A, H, RInt(n-m)
 			if meth == "*": return A, H, RInt(int(n*m))
 			if meth == "/": return A, H, RInt(int(n/m))
-			if meth == "equal?": return A, H, RInt(1) if n == m else A, H, RNil()
+			if meth == "equal?":
+				if n == m:
+					return A, H, RInt(1)
+				return A, H, RNil()
 		if len(v_args) == 0:
 			if meth == "to_s": return A, H, RStr(str(n))
 			if meth == "print": print(n); return A, H, RNil()
@@ -153,16 +156,22 @@ def invoke(p, A, H, e):
 		if len(v_args) == 1 and type(v_args[0]) == RStr:
 			s1 = v_args[0].value
 			if meth == "+": return A, H, RStr(s+s1)
-			if meth == "equal?": return A, H, RInt(1) if s == s1 else A, H, RNil()
+			if meth == "equal?":
+				if s == s1:
+					return A, H, RInt(1)
+				return A, H, RNil()
 		raise NoSuchMethod
 	if type(v_receiver) == RLoc:
 		loc = v_receiver.value
 		if len(v_args) == 0:
-			if meth == "to_s": return A, H, RStr(loc)
+			if meth == "to_s": return A, H, RStr("[Object object]")
 			if meth == "print": print(loc); return A, H, RNil()
 		if len(v_args) == 1 and type(v_args[0]) == RLoc:
 			loc1 = v_args[0].value
-			if meth == "equal?": return A, H, RInt(1) if loc == loc1 else A, H, RNil()
+			if meth == "equal?":
+				if loc == loc1:
+					return A, H, RInt(1)
+				return A, H, RNil()
 		cur_object = lookup(loc, H)
 		if cur_object is None: raise Fail
 		meth = lookup_meth(p, cur_object.class_name.value, meth)
